@@ -1,0 +1,13 @@
+{
+  "name": "campusfind",
+  "version": "2.0.0",
+  "description": "CampusFind 2.0 - Smart Campus Lost & Found Platform",
+  "scripts": {
+    "start": "npm start --prefix backend",
+    "build": "npm install --prefix backend",
+    "test": "npm test --prefix backend",
+    "db:setup": "npm run db:setup --prefix backend"
+  },
+  "author": "CampusFind Development Team",
+  "license": "ISC"
+}

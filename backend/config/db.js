@@ -9,8 +9,8 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-// Create connection pool
-const pool = mysql.createPool({
+// Create connection pool (supports both granular env vars and cloud DATABASE_URL / MYSQL_URL)
+const poolConfig = {
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || '',
@@ -21,7 +21,14 @@ const pool = mysql.createPool({
   queueLimit: 0,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0
-});
+};
+
+if (process.env.DB_SSL === 'true' || process.env.MYSQL_SSL === 'true') {
+  poolConfig.ssl = { rejectUnauthorized: false };
+}
+
+const dbUri = process.env.DATABASE_URL || process.env.MYSQL_URL;
+const pool = dbUri ? mysql.createPool(dbUri) : mysql.createPool(poolConfig);
 
 // Promise wrapper for async/await queries
 const db = pool.promise();
