@@ -297,3 +297,15 @@ Press **Ctrl + C** in the terminal where `npm run dev` / `npm start` is running.
 
 **Do NOT** just close the terminal window — the Node process may keep running in the background and hold the port.
 
+| Key | Value |
+| --- | --- |
+| `NODE_ENV` | `production` |
+| `PORT` | `5000` |
+| `DB_HOST` | `mysql-29ec902d-ashritunofficial-f282.b.aivencloud.com` |
+| `DB_PORT` | `15415` |
+| `DB_USER` | `avnadmin` |
+| `DB_PASSWORD` | `AVNS_RX6AsSWIEU16kI9OBQs` |
+| `DB_NAME` | `defaultdb` |
+| `DB_SSL` | `true` |
+| `JWT_SECRET` | `campusfind_super_secure_jwt_secret_key_change_in_production_2026` |
+| `CORS_ORIGINS` | `https://campusfind.onrender.com,http://localhost:5000` (replace with your actual Render URL once generated) |
