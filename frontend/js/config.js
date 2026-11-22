@@ -17,21 +17,19 @@ const getBaseServerUrl = () => {
   if (typeof window !== 'undefined' && window.location) {
     const { origin, hostname, protocol, port } = window.location;
 
-    // 2. Served by the Express backend itself (file:// excluded, Live Server ports excluded).
-    //    When Express serves the frontend on any port, window.location.port equals
-    //    the backend port, so we can use window.location.origin directly.
-    if (protocol !== 'file:' && port && port !== '5500' && port !== '3000') {
-      return origin; // e.g. http://localhost:5000 or http://localhost:5001
-    }
-
-    // 3. Served by Live Server / another dev server / unknown port —
-    //    point to the backend on its configured port.
-    if (protocol !== 'file:' && hostname) {
-      return `${protocol}//${hostname}:${BACKEND_FALLBACK_PORT}`;
+    // 2. Served over standard HTTP or HTTPS
+    if (protocol === 'http:' || protocol === 'https:') {
+      // If opened locally via Live Server / dev tooling on port 5500 or 3000, target the local backend port
+      if ((hostname === 'localhost' || hostname === '127.0.0.1') && (port === '5500' || port === '3000')) {
+        return `${protocol}//${hostname}:${BACKEND_FALLBACK_PORT}`;
+      }
+      // In all deployed cloud environments (Render, Railway, custom domains) or on localhost:5000,
+      // Express serves both frontend and API from the SAME origin!
+      return origin;
     }
   }
 
-  // 4. file:// or SSR fallback
+  // 3. file:// or SSR fallback
   return `http://localhost:${BACKEND_FALLBACK_PORT}`;
 };
 

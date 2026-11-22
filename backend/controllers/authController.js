@@ -29,6 +29,7 @@ const getCookieOptions = () => ({
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax',
+  path: '/',
   maxAge: 7 * 24 * 60 * 60 * 1000 // 7 Days
 });
 
@@ -204,7 +205,8 @@ const logout = (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
     sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production'
+    secure: process.env.NODE_ENV === 'production',
+    path: '/'
   });
 
   res.status(200).json({

@@ -122,10 +122,20 @@ function updateNavbarAuth() {
 
 async function handleLogout(e) {
   if (e) e.preventDefault();
+  
+  // Wipe client session immediately to guarantee user is signed out locally
+  clearUserSession();
+
   try {
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timeoutId = controller ? setTimeout(() => controller.abort(), 2000) : null;
+
     await authFetch(`${CONFIG.API_BASE_URL}/auth/logout`, {
-      method: 'POST'
+      method: 'POST',
+      signal: controller ? controller.signal : undefined
     });
+
+    if (timeoutId) clearTimeout(timeoutId);
   } catch (err) {
     console.warn('Logout API network notice:', err.message);
   } finally {
@@ -134,6 +144,6 @@ async function handleLogout(e) {
     setTimeout(() => {
       const isPagesFolder = window.location.pathname.includes('/pages/');
       window.location.href = isPagesFolder ? 'login.html' : 'pages/login.html';
-    }, 500);
+    }, 300);
   }
 }
