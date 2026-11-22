@@ -73,7 +73,12 @@ app.use(cors({
     if (!origin || origin === 'null') {
       return callback(null, true);
     }
-    if (allowedOrigins.includes(origin) || origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.startsWith('http://localhost') ||
+      origin.startsWith('http://127.0.0.1') ||
+      origin.endsWith('.onrender.com')
+    ) {
       return callback(null, true);
     }
     return callback(new Error(`CORS error: Origin '${origin}' is not allowed by CORS configuration.`));
