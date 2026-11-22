@@ -87,8 +87,8 @@ function setupLoginForm() {
     } catch (err) {
       console.warn('Login network or server notice:', err);
 
-      // Graceful fallback if backend is offline or blocked on file:// protocol
-      if (err.message.includes('fetch') || err.message.includes('Network') || window.location.protocol === 'file:') {
+      // Only fallback to mock preview if explicitly opened directly from disk (file://)
+      if (window.location.protocol === 'file:') {
         showToast('Connecting in Offline Preview Mode (To use live MySQL, visit http://localhost:5000)', 'warning', 5000);
         
         const role = email.toLowerCase().includes('admin') ? 'admin' : 'student';
@@ -185,7 +185,8 @@ function setupRegisterForm() {
     } catch (err) {
       console.warn('Registration network or server notice:', err);
 
-      if (err.message.includes('fetch') || err.message.includes('Network') || window.location.protocol === 'file:') {
+      // Only fallback to mock preview if explicitly opened directly from disk (file://)
+      if (window.location.protocol === 'file:') {
         showToast('Registered in Offline Preview Mode. (To use live MySQL, visit http://localhost:5000)', 'warning', 5000);
         const newUser = {
           id: Math.floor(Math.random() * 900) + 100,
