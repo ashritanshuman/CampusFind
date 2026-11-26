@@ -1,0 +1,10 @@
+99999 - ASHRITANSHUMAN.CV
+focousash - campusfind.cv
+asnhuman.ashrit6 - devashrit.cv
+
+mysql -h mysql-29ec902d-ashritunofficial-f282.b.aivencloud.com \
+-P 15415 \
+-u avnadmin \
+-p \
+--ssl-mode=REQUIRED \
+defaultdb
